@@ -34,18 +34,21 @@ class SwipeController extends Controller
         return $this->swipeService->swipe($request->validated());
     }
 
+    ///TODO: заменить на auth()->id()
     public function deleteAllUserToUser(): bool
     {
         $userId = 1;
         return $this->swipeRepository->delete($userId, User::class, User::class);
     }
 
+    ///TODO: заменить на auth()->id()
     public function deleteAllChatToUser(): bool
     {
         $userId = 1;
         return $this->swipeRepository->delete($userId, User::class, Chat::class);
     }
 
+    ///TODO: заменить на auth()->id()
     public function deleteAllUserToChat(): bool
     {
         $userId = 1;
