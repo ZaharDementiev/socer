@@ -38,7 +38,6 @@ class SwipeController extends Controller
     {
         $userId = 1;
         return $this->swipeRepository->delete($userId, User::class, User::class);
-
     }
 
     public function deleteAllChatToUser(): bool

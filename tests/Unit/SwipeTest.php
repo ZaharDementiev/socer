@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Enums\SwipeValue;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -17,7 +18,7 @@ class SwipeTest extends TestCase
         $data = [
             'swiper_id' =>  1,
             'swiped_id' =>  2,
-            'value' =>  1,
+            'value'     =>  SwipeValue::Like,
         ];
         $response = $this->post(route('swipe.user.user'), $data);
 
@@ -29,7 +30,7 @@ class SwipeTest extends TestCase
         $data = [
             'swiper_id' =>  1,
             'swiped_id' =>  2,
-            'value'     =>  1,
+            'value'     =>  SwipeValue::Like,
         ];
         $response = $this->post(route('swipe.user.user'), $data);
 
@@ -40,7 +41,7 @@ class SwipeTest extends TestCase
     {
         $data = [
             'swiper_type'   => User::class,
-            'swiper_id'     => 1,
+            'swiper_id'     => SwipeValue::Like,
         ];
 
         $response = $this->get(route('swipe.user.user.delete'), $data);
@@ -53,7 +54,7 @@ class SwipeTest extends TestCase
         $data = [
             'swiper_id' =>  1,
             'swiped_id' =>  1,
-            'value' =>  1,
+            'value'     =>  SwipeValue::Like,
         ];
         $response = $this->post(route('swipe.user.chat'), $data);
 
@@ -77,7 +78,7 @@ class SwipeTest extends TestCase
         $data = [
             'swiper_id' =>  1,
             'swiped_id' =>  1,
-            'value' =>  1,
+            'value' =>  SwipeValue::Like,
         ];
         $response = $this->post(route('swipe.chat.user'), $data);
 
