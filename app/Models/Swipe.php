@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\DB;
 
 /**
  * App\Models\Swipe
@@ -32,23 +33,18 @@ class Swipe extends Model
         return $this->morphTo();
     }
 
-    public function swiperUser(): ?User
+    public function swiperUser(): object
     {
-        return User::where('id', $this->swiper_id)->first();
+        return DB::table('users')->where('id', $this->swiper_id)->first();
     }
 
-    public function swipedUser(): ?User
+    public function swipedUser(): object
     {
-        return User::where('id', $this->swiped_id)->first();
+        return DB::table('users')->where('id', $this->swiped_id)->first();
     }
 
-    public function swiperChat(): ?Chat
+    public function swipedChat(): object
     {
-        return Chat::where('id', $this->swiper_id)->first();
-    }
-
-    public function swipedChat(): ?Chat
-    {
-        return Chat::where('id', $this->swiped_id)->first();
+        return DB::table('chats')->where('id', $this->swiped_id)->first();
     }
 }

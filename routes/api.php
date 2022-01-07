@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\SwipeController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,11 @@ Route::prefix('swipe')->name('swipe.')->group(function () {
     Route::get('/user/user/delete', [SwipeController::class, 'deleteAllUserToUser'])->name('user.user.delete');
     Route::get('/user/chat/delete', [SwipeController::class, 'deleteAllChatToUser'])->name('user.chat.delete');
     Route::get('/chat/user/delete', [SwipeController::class, 'deleteAllUserToChat'])->name('chat.user.delete');
+});
+
+Route::prefix('category')->name('category.')->group(function () {
+    Route::post('/', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/{region}/region', [CategoryController::class, 'allRegionals'])->name('category.regional.all');
+    Route::get('/main/all', [CategoryController::class, 'allMain'])->name('category.main.all');
+    Route::get('/{category}/delete', [CategoryController::class, 'destroy'])->name('category.destroy');
 });

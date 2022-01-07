@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSwipesTable extends Migration
+class CreateRegionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateSwipesTable extends Migration
      */
     public function up()
     {
-        Schema::create('swipes', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->morphs('swiper');
-            $table->morphs('swiped');
-            $table->unsignedTinyInteger('value');
-            $table->timestamps();
+            $table->string('name');
         });
     }
 
@@ -29,6 +26,6 @@ class CreateSwipesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('swipes');
+        Schema::dropIfExists('regions');
     }
 }

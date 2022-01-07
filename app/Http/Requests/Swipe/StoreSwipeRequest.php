@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Swipe;
 
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 abstract class StoreSwipeRequest extends FormRequest
 {
@@ -11,6 +12,7 @@ abstract class StoreSwipeRequest extends FormRequest
         return true;
     }
 
+    #[ArrayShape(['swiper_type' => "string", 'swiper_id' => "int", 'swiped_type' => "string", 'swiped_id' => "int", 'value' => "int"])]
     public function rules(): array
     {
         return [

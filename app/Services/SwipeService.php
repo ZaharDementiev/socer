@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Exceptions\DataExistsException;
+use App\Exceptions\WrongDataException;
 use App\Http\Resources\SwipeResource;
-use App\Models\Chat;
-use App\Models\User;
 use App\Repository\ChatRepository;
 use App\Repository\SwipeRepository;
 use App\Repository\UserRepository;
@@ -17,63 +17,66 @@ class SwipeService
         private ChatRepository  $chatRepository,
     ) {}
 
-    public function swipe(array $fields): ?SwipeResource
+    /**
+     * @throws DataExistsException
+     * @throws WrongDataException
+     */
+    public function swipeUserToUser(array $fields): SwipeResource
     {
-        $status = true;
-
         if ($this->swipeRepository->swipeExists($fields)) {
-            return null;
+            throw new DataExistsException();
         }
 
-        if ($fields['swiper_type'] == User::class && $fields['swiped_type'] == User::class) {
-            $status = $this->userToUser($fields['swiper_id'], $fields['swiped_id']);
-        } elseif ($fields['swiper_type'] == User::class && $fields['swiped_type'] == Chat::class) {
-            $status = $this->userToChat($fields['swiper_id'], $fields['swiped_id']);
-        } elseif ($fields['swiper_type'] == Chat::class && $fields['swiped_type'] == User::class) {
-            $status = $this->chatToUser($fields['swiper_id'], $fields['swiped_id']);
-        }
-
-        if (!$status) {
-            return null;
+        if ($fields['swiper_id'] == $fields['swiped_id'] ||
+            !$this->userRepository->checkUserExists($fields['swiped_id'])
+        ) {
+            throw new WrongDataException();
         }
 
         return new SwipeResource($this->swipeRepository->store($fields));
     }
 
-    private function userToUser(int $swiperId, int $swipedId): bool
+    /**
+     * @throws DataExistsException
+     * @throws WrongDataException
+     */
+    public function swipeUserToChat(array $fields): SwipeResource
     {
-        if ($swipedId == $swiperId || !$this->userRepository->checkUserExists($swipedId)) {
-            return false;
+        if ($this->swipeRepository->swipeExists($fields)) {
+            throw new DataExistsException();
         }
 
-        return true;
-    }
-
-    private function userToChat(int $swiperId, int $swipedId): bool
-    {
-        $swiperUser = $this->userRepository->getUserById($swiperId);
-        $swipedChat = $this->chatRepository->get($swipedId);
+        $swiperUser = $this->userRepository->getUserById($fields['swiper_id']);
+        $swipedChat = $this->chatRepository->get($fields['swiped_id']);
 
 //        if (!$swipedChat || !$swiperUser->chats) {
-//            return false;
+//            throw new WrongDataException();
 //        }
 
         ///TODO: Если среди чатов юзера есть $swipedChat -> return false
 
-        return true;
+        return new SwipeResource($this->swipeRepository->store($fields));
     }
 
-    private function chatToUser(int $swiperId, int $swipedId): bool
+    /**
+     * @throws DataExistsException
+     * @throws WrongDataException
+     */
+    public function swipeChatToUser(array $fields): SwipeResource
     {
-        $chat = $this->chatRepository->get($swiperId);
-        $swipedUser = $this->userRepository->getUserById($swipedId);
+        if ($this->swipeRepository->swipeExists($fields)) {
+            throw new DataExistsException();
+        }
+
+        $chat = $this->chatRepository->get($fields['swiper_id']);
+        $swipedUser = $this->userRepository->getUserById($fields['swiped_id']);
 
         if (!$chat) {
-            return false;
+            throw new WrongDataException();
         }
 
         ///TODO: Если среди участников чата есть $swipedUser -> return false
 
-        return true;
+        return new SwipeResource($this->swipeRepository->store($fields));
     }
 }

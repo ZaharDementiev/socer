@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum SwipeValue : int
+enum SwipeValue: int
 {
     case Dislike    = 0;
     case Like       = 1;
