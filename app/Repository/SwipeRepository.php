@@ -12,11 +12,6 @@ class SwipeRepository
         return Swipe::create($fields->getArray());
     }
 
-    public function swipeExists(ValidatedModel $fields): bool
-    {
-        return Swipe::where($fields->getArray())->exists();
-    }
-
     public function delete(int $id, string $swiperType, string $swipedType): bool
     {
         return Swipe::where('swiper_type', $swiperType)->where('swiper_id', $id)->where('swiped_type', $swipedType)->delete();

@@ -22,10 +22,12 @@ class CategoriesTable extends Seeder
           ['name' => 'Выпивка',         'description' => 'Поиск компании для похода в бар',     'type' => CategoryType::Main->value],
           ['name' => 'Знакомства',      'description' => 'Поиск компании для прогулки вечером', 'type' => CategoryType::Main->value],
 
-          ['name' => 'Пляжный волейбол',    'description' => 'Поиск компании для игры в пляжный волейбол',  'type' => CategoryType::Voted->value, 'region_id' => 1],
-          ['name' => 'Рафтинг',             'description' => 'Поиск компании для рафтинга',                 'type' => CategoryType::Voted->value, 'region_id' => 1],
+          ['name' => 'Пляжный волейбол',    'description' => 'Поиск компании для игры в пляжный волейбол',  'type' => CategoryType::Voted->value, 'region_id' => 1, 'user_id' => 1],
+          ['name' => 'Рафтинг',             'description' => 'Поиск компании для рафтинга',                 'type' => CategoryType::Voted->value, 'region_id' => 1, 'user_id' => 2],
 
-          ['name' => 'Лыжи', 'description' => 'Поиск компании для катания на лыжах', 'type' => CategoryType::Voted->value, 'region_id' => 2],
+          ['name' => 'Лыжи', 'description' => 'Поиск компании для катания на лыжах', 'type' => CategoryType::Voted->value, 'region_id' => 2, 'user_id' => 3],
+
+          ['name' => 'Митинг на Банковой', 'description' => 'Поиск компании для проплаченных митингов', 'type' => CategoryType::Voted->value, 'region_id' => 3, 'user_id' => 4],
         ];
 
         foreach ($categories as $category) {

@@ -15,8 +15,8 @@ class ChatsTable extends Seeder
     public function run()
     {
         $chats = [
-            ['name' => 'Sport Chat', 'description' => 'Test chat for sportsmen'],
-            ['name' => 'Drink chat', 'description' => 'Test chat for alcoholics'],
+            ['name' => 'Спорт чат', 'description' => 'Чат для тру спортсменов'],
+            ['name' => 'Алко чат',  'description' => 'Чат для просто потянуть мартини'],
         ];
 
         foreach ($chats as $chat) {

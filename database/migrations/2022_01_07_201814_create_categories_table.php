@@ -19,9 +19,11 @@ class CreateCategoriesTable extends Migration
             $table->string('description');
             $table->tinyInteger('type');
             $table->unsignedBigInteger('region_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 
             $table->foreign('region_id')->references('id')->on('regions')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

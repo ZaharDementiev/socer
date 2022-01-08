@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ChatsTable::class);
         $this->call(RegionsTable::class);
         $this->call(CategoriesTable::class);
+        $this->call(CategoryVotingsTable::class);
     }
 }

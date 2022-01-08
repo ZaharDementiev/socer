@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Category
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string         $description
  * @property CategoryType   $type
  * @property int            $region_id
+ * @property int            $user_id
  * @property Carbon         $created_at
  * @property Carbon         $updated_at
  */
@@ -29,5 +31,10 @@ class Category extends Model
     public function region(): ?HasOne
     {
         return $this->hasOne(Region::class, 'id', 'region_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

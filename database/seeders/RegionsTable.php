@@ -15,9 +15,10 @@ class RegionsTable extends Seeder
     public function run()
     {
         $regions = [
-          ['name' => 'Odessa'],
-          ['name' => 'Yaremche'],
-          ['name' => 'Kiev'],
+          ['name' => 'Одесса'],
+          ['name' => 'Яремче'],
+          ['name' => 'Киев'],
+          ['name' => 'Львов'],
         ];
 
         foreach ($regions as $region) {

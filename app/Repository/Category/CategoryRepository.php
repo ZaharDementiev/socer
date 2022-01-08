@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Category;
 
 use App\Enums\CategoryType;
 use App\Helpers\ValidatedModel;
 use App\Models\Category;
+use App\Models\CategoryVoting;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class CategoryRepository

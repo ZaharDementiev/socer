@@ -31,4 +31,5 @@ Route::prefix('category')->name('category.')->group(function () {
     Route::get('/{region}/region', [CategoryController::class, 'allRegionals'])->name('category.regional.all');
     Route::get('/main/all', [CategoryController::class, 'allMain'])->name('category.main.all');
     Route::get('/{category}/delete', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::get('/{category}/deadline', [CategoryController::class, 'setDeadline'])->name('category.set.deadline');
 });
