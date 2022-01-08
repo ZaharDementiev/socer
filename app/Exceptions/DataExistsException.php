@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\ResponseHelper;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
@@ -9,14 +10,7 @@ class DataExistsException extends Exception
 {
     public function render(): JsonResponse
     {
-        return response()->json([
-            'data'      => null,
-            'status'    => false,
-            'error'     => [
-                'message'   => 'This data already stored',
-                'code'      => 400
-            ]
-        ], 400);
+        return ResponseHelper::badRequestResponse('This data already stored');
     }
 }
 

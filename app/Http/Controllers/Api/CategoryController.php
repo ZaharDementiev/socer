@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\DataExistsException;
+use App\Helpers\ValidatedModel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest as CategoryStoreRequest;
+use App\Http\Requests\Category\UpdateRequest as CategoryUpdateRequest;
 use App\Models\Category;
 use App\Models\Region;
 use App\Repository\CategoryRepository;
@@ -19,12 +20,14 @@ class CategoryController extends Controller
         private CategoryRepository  $categoryRepository,
     ) {}
 
-    /**
-     * @throws DataExistsException
-     */
     public function store(CategoryStoreRequest $request): CategoryResource
     {
-        return $this->categoryService->store($request->validated());
+        return $this->categoryService->store(new ValidatedModel($request->validated()));
+    }
+
+    public function update(Category $category, CategoryUpdateRequest $request): CategoryResource
+    {
+        return $this->categoryService->update($category, new ValidatedModel($request->validated()));
     }
 
     public function allRegionals(Region $region): AnonymousResourceCollection

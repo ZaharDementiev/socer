@@ -6,10 +6,10 @@ use App\Helpers\ResponseHelper;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
-class WrongDataException extends Exception
+class UpdateException extends Exception
 {
     public function render(): JsonResponse
     {
-        return ResponseHelper::badRequestResponse('Wrong data entered');
+        return ResponseHelper::badRequestResponse('Cannot update');
     }
 }

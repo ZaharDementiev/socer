@@ -27,6 +27,7 @@ Route::prefix('swipe')->name('swipe.')->group(function () {
 
 Route::prefix('category')->name('category.')->group(function () {
     Route::post('/', [CategoryController::class, 'store'])->name('category.store');
+    Route::post('/{category}', [CategoryController::class, 'update'])->name('category.update');
     Route::get('/{region}/region', [CategoryController::class, 'allRegionals'])->name('category.regional.all');
     Route::get('/main/all', [CategoryController::class, 'allMain'])->name('category.main.all');
     Route::get('/{category}/delete', [CategoryController::class, 'destroy'])->name('category.destroy');

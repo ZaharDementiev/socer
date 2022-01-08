@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\DataExistsException;
 use App\Exceptions\WrongDataException;
+use App\Helpers\ValidatedModel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Swipe\StoreChatToUserRequest;
 use App\Http\Requests\Swipe\StoreUserToChatRequest;
 use App\Http\Requests\Swipe\StoreUserToUserRequest;
 use App\Models\Chat;
-use App\Models\Swipe;
 use App\Models\User;
 use App\Repository\SwipeRepository;
 use App\Services\SwipeService;
@@ -22,31 +22,19 @@ class SwipeController extends Controller
         private SwipeRepository $swipeRepository,
     ) {}
 
-    /**
-     * @throws WrongDataException
-     * @throws DataExistsException
-     */
     public function storeUserToUser(StoreUserToUserRequest $request): SwipeResource
     {
-        return $this->swipeService->swipeUserToUser($request->validated());
+        return $this->swipeService->swipeUserToUser(new ValidatedModel($request->validated()));
     }
 
-    /**
-     * @throws WrongDataException
-     * @throws DataExistsException
-     */
     public function storeUserToChat(StoreUserToChatRequest $request): SwipeResource
     {
-        return $this->swipeService->swipeUserToChat($request->validated());
+        return $this->swipeService->swipeUserToChat(new ValidatedModel($request->validated()));
     }
 
-    /**
-     * @throws WrongDataException
-     * @throws DataExistsException
-     */
-    public function storeChatToUser(StoreChatToUserRequest $request): SwipeResource
+   public function storeChatToUser(StoreChatToUserRequest $request): SwipeResource
     {
-        return $this->swipeService->swipeChatToUser($request->validated());
+        return $this->swipeService->swipeChatToUser(new ValidatedModel($request->validated()));
     }
 
     ///TODO: заменить на auth()->id()

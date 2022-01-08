@@ -18,7 +18,7 @@ class SwipeTest extends TestCase
         $data = [
             'swiper_id' =>  1,
             'swiped_id' =>  2,
-            'value'     =>  SwipeValue::Like,
+            'value'     =>  SwipeValue::Like->value,
         ];
         $response = $this->post(route('swipe.user.user'), $data);
 
@@ -30,7 +30,7 @@ class SwipeTest extends TestCase
         $data = [
             'swiper_id' =>  1,
             'swiped_id' =>  2,
-            'value'     =>  SwipeValue::Like,
+            'value'     =>  SwipeValue::Like->value,
         ];
         $response = $this->post(route('swipe.user.user'), $data);
 
@@ -41,7 +41,7 @@ class SwipeTest extends TestCase
     {
         $data = [
             'swiper_type'   => User::class,
-            'swiper_id'     => SwipeValue::Like,
+            'swiper_id'     => SwipeValue::Like->value,
         ];
 
         $response = $this->get(route('swipe.user.user.delete'), $data);
@@ -54,7 +54,7 @@ class SwipeTest extends TestCase
         $data = [
             'swiper_id' =>  1,
             'swiped_id' =>  1,
-            'value'     =>  SwipeValue::Like,
+            'value'     =>  SwipeValue::Like->value,
         ];
         $response = $this->post(route('swipe.user.chat'), $data);
 
@@ -78,7 +78,7 @@ class SwipeTest extends TestCase
         $data = [
             'swiper_id' =>  1,
             'swiped_id' =>  1,
-            'value' =>  SwipeValue::Like,
+            'value' =>  SwipeValue::Like->value,
         ];
         $response = $this->post(route('swipe.chat.user'), $data);
 

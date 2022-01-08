@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Exceptions\DataExistsException;
 use App\Exceptions\WrongDataException;
+use App\Helpers\ValidatedModel;
 use App\Http\Resources\SwipeResource;
 use App\Repository\ChatRepository;
 use App\Repository\SwipeRepository;
 use App\Repository\UserRepository;
+use stdClass;
 
 class SwipeService
 {
@@ -21,33 +23,37 @@ class SwipeService
      * @throws DataExistsException
      * @throws WrongDataException
      */
-    public function swipeUserToUser(array $fields): SwipeResource
+    public function swipeUserToUser(ValidatedModel $validatedModel): SwipeResource
     {
-        if ($this->swipeRepository->swipeExists($fields)) {
+        if ($this->swipeRepository->swipeExists($validatedModel)) {
             throw new DataExistsException();
         }
 
-        if ($fields['swiper_id'] == $fields['swiped_id'] ||
-            !$this->userRepository->checkUserExists($fields['swiped_id'])
+        $fields = $validatedModel->getObject();
+
+        if ($fields->swiper_id == $fields->swiped_id ||
+            !$this->userRepository->checkUserExists($fields->swiped_id)
         ) {
             throw new WrongDataException();
         }
 
-        return new SwipeResource($this->swipeRepository->store($fields));
+        return new SwipeResource($this->swipeRepository->store($validatedModel));
     }
 
     /**
      * @throws DataExistsException
      * @throws WrongDataException
      */
-    public function swipeUserToChat(array $fields): SwipeResource
+    public function swipeUserToChat(ValidatedModel $validatedModel): SwipeResource
     {
-        if ($this->swipeRepository->swipeExists($fields)) {
+        if ($this->swipeRepository->swipeExists($validatedModel)) {
             throw new DataExistsException();
         }
 
-        $swiperUser = $this->userRepository->getUserById($fields['swiper_id']);
-        $swipedChat = $this->chatRepository->get($fields['swiped_id']);
+        $fields = $validatedModel->getObject();
+
+        $swiperUser = $this->userRepository->getUserById($fields->swiper_id);
+        $swipedChat = $this->chatRepository->get($fields->swiped_id);
 
 //        if (!$swipedChat || !$swiperUser->chats) {
 //            throw new WrongDataException();
@@ -55,21 +61,23 @@ class SwipeService
 
         ///TODO: Если среди чатов юзера есть $swipedChat -> return false
 
-        return new SwipeResource($this->swipeRepository->store($fields));
+        return new SwipeResource($this->swipeRepository->store($validatedModel));
     }
 
     /**
      * @throws DataExistsException
      * @throws WrongDataException
      */
-    public function swipeChatToUser(array $fields): SwipeResource
+    public function swipeChatToUser(ValidatedModel $validatedModel): SwipeResource
     {
-        if ($this->swipeRepository->swipeExists($fields)) {
+        if ($this->swipeRepository->swipeExists($validatedModel)) {
             throw new DataExistsException();
         }
 
-        $chat = $this->chatRepository->get($fields['swiper_id']);
-        $swipedUser = $this->userRepository->getUserById($fields['swiped_id']);
+        $fields = $validatedModel->getObject();
+
+        $chat = $this->chatRepository->get($fields->swiper_id);
+        $swipedUser = $this->userRepository->getUserById($fields->swiped_id);
 
         if (!$chat) {
             throw new WrongDataException();
@@ -77,6 +85,6 @@ class SwipeService
 
         ///TODO: Если среди участников чата есть $swipedUser -> return false
 
-        return new SwipeResource($this->swipeRepository->store($fields));
+        return new SwipeResource($this->swipeRepository->store($validatedModel));
     }
 }
