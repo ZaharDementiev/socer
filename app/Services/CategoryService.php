@@ -62,11 +62,12 @@ class CategoryService
 
         ///TODO: считать кол-во голосов и дедлайн для региона
         $neededVotes = 100;
+        $deadline = Carbon::now()->addDays(CategoryVoting::VOTING_TIME * 1);
 
         $data = [
             'category_id'   => $category->id,
             'needed_votes'  => $neededVotes,
-            'deadline'      => Carbon::now()->addDays(CategoryVoting::VOTING_TIME * 1),
+            'deadline'      => $deadline,
         ];
 
         return new CategoryVotingResource($this->categoryVotingRepository->store($data));

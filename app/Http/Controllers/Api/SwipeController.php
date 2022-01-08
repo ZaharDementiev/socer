@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\DataExistsException;
-use App\Exceptions\WrongDataException;
 use App\Helpers\ValidatedModel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Swipe\StoreChatToUserRequest;
